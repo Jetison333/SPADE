@@ -10,7 +10,7 @@ class codeGen : ImathListener {
     public Dictionary<string, UtilCollection> map;
     public bool constraintsMet = true;
 
-    public Stack<UtilCollection> formatStack;
+    public Stack<FormatDescriptor> formatStack;
 
     public Stack<SetDescriptor> setDescriptorStack;
 
@@ -27,7 +27,7 @@ class codeGen : ImathListener {
     /// <param name="context">The parse tree.</param>
     public void EnterStart([NotNull] mathParser.StartContext context)
     {
-        formatStack.Push(collection); // for the format section
+
     }
     /// <summary>
     /// Exit a parse tree produced by <see cref="mathParser.start"/>.
@@ -35,6 +35,7 @@ class codeGen : ImathListener {
     /// <param name="context">The parse tree.</param>
     public void ExitStart([NotNull] mathParser.StartContext context)
     {
+
     }
     /// <summary>
     /// Enter a parse tree produced by <see cref="mathParser.format"/>.
@@ -42,6 +43,7 @@ class codeGen : ImathListener {
     /// <param name="context">The parse tree.</param>
     public void EnterFormat([NotNull] mathParser.FormatContext context)
     {
+        /*
         if (context.format().Length != 0)
         {
             UtilCollection curr = formatStack.Pop();
@@ -55,6 +57,7 @@ class codeGen : ImathListener {
         {
             map.Add(context.TERM().ToString()!, formatStack.Pop());
         }
+    */
     }
     /// <summary>
     /// Exit a parse tree produced by <see cref="mathParser.format"/>.
@@ -62,6 +65,28 @@ class codeGen : ImathListener {
     /// <param name="context">The parse tree.</param>
     public void ExitFormat([NotNull] mathParser.FormatContext context)
     {
+        if (context.format().Length != 0)
+        {
+            List<FormatDescriptor> lst = new();
+            for (int i = 0; i < context.format().Length; i++)
+            {
+                lst.Add(formatStack.Pop());           
+            }
+            lst.Reverse(); // have to reverse the list, since the leftmost should be the one that was popped first
+            formatStack.Push(new FormatDescriptor(lst));
+        }
+        if (context.TERM() != null)
+        {
+            formatStack.Push(new FormatDescriptor(context.TERM().ToString()!));
+        }
+
+        if (context.Parent is not mathParser.FormatContext)
+        {
+            map = new();
+            FormatDescriptor form = formatStack.Pop();
+            if (formatStack.Count() != 0) throw new Exception("formatStack not empty after eval");
+            form.parseFunc(map, collection);
+        }
     }
     /// <summary>
     /// Enter a parse tree produced by <see cref="mathParser.constraint"/>.
