@@ -167,7 +167,7 @@ class codeGen : ImathListener {
     {
         if (context.TERM() != null)
         {
-            setDescriptorStack.Push(new SetDescriptor(map[context.TERM().ToString()!]));
+            setDescriptorStack.Push(new SetDescriptor(map, context.TERM().ToString()!));
         }
 
         if (context.BIN_OP() != null)
