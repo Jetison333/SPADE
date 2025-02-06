@@ -3,7 +3,7 @@ grammar math;
 options {
     language = CSharp;
 }
-start     : format 'where' constraint? (CM constraint)* EOF ;
+start     : set EOF ;
 format    : '{' format (CM format)* '}' 
           | '(' format (CM format)* ')' 
           | TERM
@@ -27,6 +27,7 @@ list      : '(' TERM (CM TERM)* ')';
 BIN_OP    : 'union' 
           | 'intersection' 
           | 'cross'
+          | 'unorderedcross'
           ;
 BUILT_IN  : 'set' 
           | 'list' 
