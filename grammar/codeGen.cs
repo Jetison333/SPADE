@@ -104,58 +104,6 @@ class codeGen : ImathListener {
     /// <param name="context">The parse tree.</param>
     public void ExitConstraint([NotNull] mathParser.ConstraintContext context)
     {
-        /*
-        switch(context.DEFINITION().ToString())
-        {
-            case "is":
-                if (context.@object() != null && context.@object().BUILT_IN != null)
-                switch(context.@object().BUILT_IN().ToString())
-                {
-                    case "set":
-                        constraintsMet = constraintsMet && map[context.TERM().ToString()!].IsUnordered();                    
-                        if (map[context.TERM().ToString()!].IsOrdered())
-                        {
-                            throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().BUILT_IN()} failed because {context.TERM()} was not a set");
-                        }
-                        break;
-                    case "list":
-                        constraintsMet = constraintsMet && map[context.TERM().ToString()!].IsOrdered();                    
-                        if (map[context.TERM().ToString()!].IsUnordered())
-                        {
-                            throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().BUILT_IN()} failed because {context.TERM()} was not a list");
-                        }
-                        break;
-                    case "int":
-                        constraintsMet = constraintsMet && map[context.TERM().ToString()!].IsValue();                    
-                        if (!map[context.TERM().ToString()!].IsValue())
-                        {
-                            throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().BUILT_IN()} failed because {context.TERM()} was not a value");
-                        }
-                        break;
-                }
-                break;
-
-            case "subset":
-                if (context.@object() != null)
-                {
-                    if (context.@object().BIN_OP() != null || context.@object().set() != null)
-                    {
-                        SetDescriptor subsetSet = setDescriptorStack.Pop();
-                        bool constraintMet = true;
-                        foreach (UtilCollection item in map[context.TERM().ToString()!])
-                        {
-                            if (!subsetSet.isMember(item))
-                            {
-                                constraintMet = false;
-                                throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().GetText()} failed because {item} was not a subset of {context.@object().GetText()}");
-                            }
-                        }
-                        constraintsMet = constraintMet && constraintsMet;
-                    }
-                }
-                break;
-        }
-        */
         switch(context.DEFINITION().ToString())
         {
             case "is":
@@ -239,6 +187,9 @@ class codeGen : ImathListener {
                     break;
                 case "cross":
                     setDescriptorStack.Push(left.Cross(right));
+                    break;
+                case "unorderedcross":
+                    setDescriptorStack.Push(left.UnorderedCross(right));
                     break;
             }
 

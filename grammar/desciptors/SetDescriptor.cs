@@ -1,6 +1,7 @@
 
 
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 
 class SetDescriptor
 {
@@ -47,6 +48,37 @@ class SetDescriptor
     {
         Func<UtilCollection, bool> _isMember = (a) => isMember(a[0]) && other.isMember(a[1]);
         Func<UtilCollection> _genSet = () => genSet().Cross(other.genSet());
+        return new SetDescriptor(map, _isMember, _genSet);
+    }
+
+    public SetDescriptor UnorderedCross(SetDescriptor other)
+    {
+        Func<UtilCollection, bool> _isMember = (a) => 
+        {
+            foreach (UtilCollection item in a)
+            {
+                if (!isMember(item) && !other.isMember(item))
+                {
+                    return false;
+                }
+            } 
+            return true;
+        };
+        Func<UtilCollection> _genSet = () => 
+        {
+            UtilCollection set = new("{}");
+            foreach (UtilCollection first in genSet())
+            {
+                foreach (UtilCollection second in other.genSet())
+                {
+                    UtilCollection pair = new("{}");
+                    pair.Add(first);
+                    pair.Add(second);
+                    set.Add(pair);
+                }
+            }
+            return set;
+        };
         return new SetDescriptor(map, _isMember, _genSet);
     }
 
