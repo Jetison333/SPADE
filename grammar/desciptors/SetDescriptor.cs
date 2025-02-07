@@ -3,6 +3,10 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
+using DiscreteParser;
+
+namespace DiscreteParser.grammar.descriptor;
+
 class SetDescriptor
 {
     public Func<UtilCollection,bool> isMember;

@@ -1,4 +1,6 @@
+using DiscreteParser;
 
+namespace DiscreteParser.grammar.descriptor;
 
 class ConstraintDescriptor
 {

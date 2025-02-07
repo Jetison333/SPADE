@@ -1,16 +1,18 @@
-
-
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
-class DF
+using DiscreteParser.grammar;
+
+namespace DiscreteParser;
+public class StringParser
 {
     readonly string format;
-    public Dictionary<string, UtilCollection> map;
+    public Dictionary<string, UtilCollection> map = new();
 
-    public DF (string f)
+    public StringParser (string f)
     {
         format = f;
     }
@@ -18,9 +20,9 @@ class DF
     public void parse(string instance)
     {
         AntlrInputStream stream = new AntlrInputStream(format);
-        mathLexer lex =  new mathLexer(stream);
+        collLexer lex =  new collLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lex);
-        mathParser parser = new mathParser(tokens);
+        collParser parser = new collParser(tokens);
 
         parser.BuildParseTree = true;
         IParseTree parseTree = parser.start();

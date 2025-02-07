@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from math.g4 by ANTLR 4.13.2
+// Generated from coll.g4 by ANTLR 4.13.2
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -27,86 +27,86 @@ using IToken = Antlr4.Runtime.IToken;
 using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 
 /// <summary>
-/// This class provides an empty implementation of <see cref="ImathListener"/>,
+/// This class provides an empty implementation of <see cref="IcollListener"/>,
 /// which can be extended to create a listener which only needs to handle a subset
 /// of the available methods.
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.2")]
 [System.Diagnostics.DebuggerNonUserCode]
 [System.CLSCompliant(false)]
-public partial class mathBaseListener : ImathListener {
+public partial class collBaseListener : IcollListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="mathParser.start"/>.
+	/// Enter a parse tree produced by <see cref="collParser.start"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterStart([NotNull] mathParser.StartContext context) { }
+	public virtual void EnterStart([NotNull] collParser.StartContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="mathParser.start"/>.
+	/// Exit a parse tree produced by <see cref="collParser.start"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitStart([NotNull] mathParser.StartContext context) { }
+	public virtual void ExitStart([NotNull] collParser.StartContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="mathParser.format"/>.
+	/// Enter a parse tree produced by <see cref="collParser.format"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterFormat([NotNull] mathParser.FormatContext context) { }
+	public virtual void EnterFormat([NotNull] collParser.FormatContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="mathParser.format"/>.
+	/// Exit a parse tree produced by <see cref="collParser.format"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitFormat([NotNull] mathParser.FormatContext context) { }
+	public virtual void ExitFormat([NotNull] collParser.FormatContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="mathParser.constraint"/>.
+	/// Enter a parse tree produced by <see cref="collParser.constraint"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterConstraint([NotNull] mathParser.ConstraintContext context) { }
+	public virtual void EnterConstraint([NotNull] collParser.ConstraintContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="mathParser.constraint"/>.
+	/// Exit a parse tree produced by <see cref="collParser.constraint"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitConstraint([NotNull] mathParser.ConstraintContext context) { }
+	public virtual void ExitConstraint([NotNull] collParser.ConstraintContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="mathParser.object"/>.
+	/// Enter a parse tree produced by <see cref="collParser.object"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterObject([NotNull] mathParser.ObjectContext context) { }
+	public virtual void EnterObject([NotNull] collParser.ObjectContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="mathParser.object"/>.
+	/// Exit a parse tree produced by <see cref="collParser.object"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitObject([NotNull] mathParser.ObjectContext context) { }
+	public virtual void ExitObject([NotNull] collParser.ObjectContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="mathParser.set"/>.
+	/// Enter a parse tree produced by <see cref="collParser.set"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterSet([NotNull] mathParser.SetContext context) { }
+	public virtual void EnterSet([NotNull] collParser.SetContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="mathParser.set"/>.
+	/// Exit a parse tree produced by <see cref="collParser.set"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitSet([NotNull] mathParser.SetContext context) { }
+	public virtual void ExitSet([NotNull] collParser.SetContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="mathParser.list"/>.
+	/// Enter a parse tree produced by <see cref="collParser.list"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterList([NotNull] mathParser.ListContext context) { }
+	public virtual void EnterList([NotNull] collParser.ListContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="mathParser.list"/>.
+	/// Exit a parse tree produced by <see cref="collParser.list"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitList([NotNull] mathParser.ListContext context) { }
+	public virtual void ExitList([NotNull] collParser.ListContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

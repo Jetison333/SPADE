@@ -1,4 +1,4 @@
-grammar math;
+grammar coll;
 
 options {
     language = CSharp;

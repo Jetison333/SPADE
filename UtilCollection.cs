@@ -1,9 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Collections;
+﻿using System.Collections;
 using System.Runtime.Serialization;
 
-
+namespace DiscreteParser;
 
 #pragma warning disable CS1591
 

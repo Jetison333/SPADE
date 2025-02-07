@@ -4,8 +4,11 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
+using DiscreteParser.grammar.descriptor;
 
-class codeGen : ImathListener {
+namespace DiscreteParser.grammar;
+
+class codeGen : IcollListener {
     public UtilCollection collection;
     public Dictionary<string, UtilCollection> map;
     public bool constraintsMet = true;
@@ -25,26 +28,26 @@ class codeGen : ImathListener {
         constraintDescriptorStack = new();
     }
     /// <summary>
-    /// Enter a parse tree produced by <see cref="mathParser.start"/>.
+    /// Enter a parse tree produced by <see cref="collParser.start"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void EnterStart([NotNull] mathParser.StartContext context)
+    public void EnterStart([NotNull] collParser.StartContext context)
     {
 
     }
     /// <summary>
-    /// Exit a parse tree produced by <see cref="mathParser.start"/>.
+    /// Exit a parse tree produced by <see cref="collParser.start"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void ExitStart([NotNull] mathParser.StartContext context)
+    public void ExitStart([NotNull] collParser.StartContext context)
     {
 
     }
     /// <summary>
-    /// Enter a parse tree produced by <see cref="mathParser.format"/>.
+    /// Enter a parse tree produced by <see cref="collParser.format"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void EnterFormat([NotNull] mathParser.FormatContext context)
+    public void EnterFormat([NotNull] collParser.FormatContext context)
     {
         /*
         if (context.format().Length != 0)
@@ -63,10 +66,10 @@ class codeGen : ImathListener {
     */
     }
     /// <summary>
-    /// Exit a parse tree produced by <see cref="mathParser.format"/>.
+    /// Exit a parse tree produced by <see cref="collParser.format"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void ExitFormat([NotNull] mathParser.FormatContext context)
+    public void ExitFormat([NotNull] collParser.FormatContext context)
     {
         if (context.format().Length != 0)
         {
@@ -83,7 +86,7 @@ class codeGen : ImathListener {
             formatStack.Push(new FormatDescriptor(context.TERM().ToString()!));
         }
 
-        if (context.Parent is not mathParser.FormatContext)
+        if (context.Parent is not collParser.FormatContext)
         {
             map = new();
             FormatDescriptor form = formatStack.Pop();
@@ -92,17 +95,17 @@ class codeGen : ImathListener {
         }
     }
     /// <summary>
-    /// Enter a parse tree produced by <see cref="mathParser.constraint"/>.
+    /// Enter a parse tree produced by <see cref="collParser.constraint"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void EnterConstraint([NotNull] mathParser.ConstraintContext context)
+    public void EnterConstraint([NotNull] collParser.ConstraintContext context)
     {
     }
     /// <summary>
-    /// Exit a parse tree produced by <see cref="mathParser.constraint"/>.
+    /// Exit a parse tree produced by <see cref="collParser.constraint"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void ExitConstraint([NotNull] mathParser.ConstraintContext context)
+    public void ExitConstraint([NotNull] collParser.ConstraintContext context)
     {
         switch(context.DEFINITION().ToString())
         {
@@ -156,17 +159,17 @@ class codeGen : ImathListener {
         }
     }
     /// <summary>
-    /// Enter a parse tree produced by <see cref="mathParser.object"/>.
+    /// Enter a parse tree produced by <see cref="collParser.object"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void EnterObject([NotNull] mathParser.ObjectContext context)
+    public void EnterObject([NotNull] collParser.ObjectContext context)
     {
     }
     /// <summary>
-    /// Exit a parse tree produced by <see cref="mathParser.object"/>.
+    /// Exit a parse tree produced by <see cref="collParser.object"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void ExitObject([NotNull] mathParser.ObjectContext context)
+    public void ExitObject([NotNull] collParser.ObjectContext context)
     {
         if (context.TERM() != null)
         {
@@ -196,31 +199,31 @@ class codeGen : ImathListener {
         }
     }
     /// <summary>
-    /// Enter a parse tree produced by <see cref="mathParser.set"/>.
+    /// Enter a parse tree produced by <see cref="collParser.set"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void EnterSet([NotNull] mathParser.SetContext context)
+    public void EnterSet([NotNull] collParser.SetContext context)
     {
     }
     /// <summary>
-    /// Exit a parse tree produced by <see cref="mathParser.set"/>.
+    /// Exit a parse tree produced by <see cref="collParser.set"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void ExitSet([NotNull] mathParser.SetContext context)
+    public void ExitSet([NotNull] collParser.SetContext context)
     {
     }
     /// <summary>
-    /// Enter a parse tree produced by <see cref="mathParser.list"/>.
+    /// Enter a parse tree produced by <see cref="collParser.list"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void EnterList([NotNull] mathParser.ListContext context)
+    public void EnterList([NotNull] collParser.ListContext context)
     {
     }
     /// <summary>
-    /// Exit a parse tree produced by <see cref="mathParser.list"/>.
+    /// Exit a parse tree produced by <see cref="collParser.list"/>.
     /// </summary>
     /// <param name="context">The parse tree.</param>
-    public void ExitList([NotNull] mathParser.ListContext context)
+    public void ExitList([NotNull] collParser.ListContext context)
     {
     }
 

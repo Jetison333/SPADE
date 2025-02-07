@@ -1,5 +1,9 @@
 using System.Collections;
 
+using DiscreteParser;
+
+namespace DiscreteParser.grammar.descriptor;
+
 class FormatDescriptor
 {
     public Action<Dictionary<string, UtilCollection>, UtilCollection> parseFunc;
