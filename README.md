@@ -5,7 +5,7 @@ SPADE is a language designed to parse, validate, and allow access to discrete ma
 
 to install SPADE into a c# project use
 ```bash
-dotnet add package DiscreteParser --version 0.1.1
+dotnet add package DiscreteParser
 ```
 
 and then import with
