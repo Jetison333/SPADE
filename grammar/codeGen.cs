@@ -171,6 +171,11 @@ class codeGen : IcollListener {
     /// <param name="context">The parse tree.</param>
     public void ExitObject([NotNull] collParser.ObjectContext context)
     {
+        if (context.BUILT_IN() != null)
+        {
+            setDescriptorStack.Push(new SetDescriptor(map, context.BUILT_IN().ToString()!));
+        }
+
         if (context.TERM() != null)
         {
             setDescriptorStack.Push(new SetDescriptor(map, context.TERM().ToString()!));

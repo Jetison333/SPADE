@@ -37,9 +37,19 @@ class SetDescriptor
 
     public SetDescriptor(Dictionary<String, UtilCollection> _map, String name)
     {
-        map = _map;
-        isMember = (checkedColl) => map[name].Contains(checkedColl);
-        genSet = () => map[name];
+        switch(name)
+        {
+            case "int":
+                map = _map;
+                isMember = (checkedColl) => int.TryParse(checkedColl.ToString(), out _);
+                genSet = () => throw new Exception("Can't generate infinite integer set");
+                break;
+            default:
+                map = _map;
+                isMember = (checkedColl) => map[name].Contains(checkedColl);
+                genSet = () => map[name];
+                break;
+        }
     }
     /*
         Func<UtilCollection, bool> _isMember = (a) => 
