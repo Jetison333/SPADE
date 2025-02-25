@@ -1,5 +1,17 @@
-# DF
-DF is a language designed to parse, validate, and allow access to discrete math data structures. 
+# SPADE
+SPADE is a language designed to parse, validate, and allow access to discrete math data structures. 
+
+# Installation
+
+to install SPADE into a c# project use
+```bash
+dotnet add package DiscreteParser --version 0.1.1
+```
+
+and then import with
+```c#
+using DiscreteParser;
+```
 
 antlr commands should be done inside of grammar/
 to test grammer rules, use
