@@ -3,9 +3,10 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
-using DiscreteParser;
+using SPADE;
+using SPADE.Grammar.Enums;
 
-namespace DiscreteParser.grammar.descriptor;
+namespace SPADE.Grammar.descriptor;
 
 class SetDescriptor
 {
@@ -37,20 +38,34 @@ class SetDescriptor
 
     public SetDescriptor(Dictionary<String, UtilCollection> _map, String name)
     {
-        switch(name)
-        {
-            case "int":
-                map = _map;
-                isMember = (checkedColl) => int.TryParse(checkedColl.ToString(), out _);
-                genSet = () => throw new Exception("Can't generate infinite integer set");
-                break;
-            default:
-                map = _map;
-                isMember = (checkedColl) => map[name].Contains(checkedColl);
-                genSet = () => map[name];
-                break;
-        }
+        map = _map;
+        isMember = (checkedColl) => map[name].Contains(checkedColl);
+        genSet = () => map[name];
     }
+
+    public SetDescriptor(Dictionary<String, UtilCollection> _map, BuiltInSet builtInSet)
+    {
+        map = _map;
+        isMember = (checkedColl) => int.TryParse(checkedColl.ToString(), out _);
+        genSet = () => throw new Exception("Can't generate infinite integer set");
+    }
+
+    public SetDescriptor(Dictionary<string, UtilCollection> _map, FormatDescriptor formatDescriptor, List<ConstraintDescriptor> constraintDescriptors)
+    {
+        map = _map;
+        isMember = (collection) =>
+        {
+            formatDescriptor.parseFunc(map, collection);
+            foreach (ConstraintDescriptor constraintDescriptor in constraintDescriptors)
+            {
+                constraintDescriptor.check(map);
+            }
+            return true; 
+        };
+
+        genSet = () => throw new NotImplementedException("generating every set descriptor not implemented");
+    }
+
     /*
         Func<UtilCollection, bool> _isMember = (a) => 
         Func<UtilCollection> _genSet = () =>

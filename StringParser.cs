@@ -4,9 +4,9 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
-using DiscreteParser.grammar;
+using SPADE.Grammar;
 
-namespace DiscreteParser;
+namespace SPADE;
 public class StringParser
 {
     readonly string format;
@@ -26,8 +26,10 @@ public class StringParser
 
         parser.BuildParseTree = true;
         IParseTree parseTree = parser.start();
-        codeGen gen = new codeGen(new UtilCollection(instance));
+        codeGen gen = new codeGen();
         ParseTreeWalker.Default.Walk(gen, parseTree);
+        gen.Parse(new UtilCollection(instance));
+
 
         map = gen.map; 
 

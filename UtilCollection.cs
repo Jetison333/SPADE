@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.Serialization;
 
-namespace DiscreteParser;
+namespace SPADE;
 
 #pragma warning disable CS1591
 

@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>DiscreteParser</PackageId>
-    <Version>0.1.1</Version>
+    <PackageId>SPADE</PackageId>
+    <Version>0.1.2</Version>
     <Authors>Russell Phillips</Authors>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>

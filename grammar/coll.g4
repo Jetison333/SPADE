@@ -8,10 +8,20 @@ format    : '{' format (CM format)* '}'
           | '(' format (CM format)* ')' 
           | TERM
           ;
-constraint: TERM DEFINITION object;
+constraint: TERM DEFINITION object
+          | constraint BIN_LOG_OP constraint
+          | NOT constraint
+          ;
+BIN_LOG_OP: 'and'
+          | 'or'
+          | 'nand'
+          | 'xor'
+          | 'nor'
+          | 'xnor'
+          ;
+NOT       : 'not' ;
 DEFINITION: 'is' 
           | 'in' 
-          | '=' 
           | 'subset'
           ;
 object    : object BIN_OP object
@@ -19,6 +29,7 @@ object    : object BIN_OP object
           | list 
           | TERM
           | BUILT_IN
+          | BUILT_IN_SET
           ;
 set       : '{' format  '|' constraint? (CM constraint)*  '}' 
           | '{' TERM (CM TERM)*  '}' 
@@ -33,8 +44,8 @@ BUILT_IN  : 'set'
           | 'list' 
           | 'graph' 
           | 'weightedGraph' 
-          | 'int'
 		  ;
+BUILT_IN_SET: 'int';
 TERM      : [a-zA-Z0-9.]+ ;
 WS        : [ \t\r\n]+ -> skip ;
 CM        : [,] ; 

@@ -1,33 +1,30 @@
-using DiscreteParser;
+using SPADE;
 
-namespace DiscreteParser.grammar.descriptor;
+namespace SPADE.Grammar.descriptor;
 
 class ConstraintDescriptor
 {
-    Dictionary<String, UtilCollection> map;
     String term;
     String definition;
     SetDescriptor? set;
     String? built_in;
 
-    public ConstraintDescriptor(Dictionary<String, UtilCollection> _map, String _term, String _definition, SetDescriptor _set)
+    public ConstraintDescriptor(String _term, String _definition, SetDescriptor _set)
     {
-       map = _map;
        term = _term;
        definition = _definition; 
        set = _set;
     }
 
-    public ConstraintDescriptor(Dictionary<String, UtilCollection> _map, String _term, String _definition, String _built_in)
+    public ConstraintDescriptor(String _term, String _definition, String _built_in)
     {
-       map = _map;
        term = _term;
        definition = _definition; 
        built_in = _built_in;
     }
 
 
-    public void check()
+    public void check(Dictionary<string, UtilCollection> map)
     {
         switch (definition)
         {

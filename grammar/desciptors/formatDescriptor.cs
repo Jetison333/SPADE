@@ -1,8 +1,8 @@
 using System.Collections;
 
-using DiscreteParser;
+using SPADE;
 
-namespace DiscreteParser.grammar.descriptor;
+namespace SPADE.Grammar.descriptor;
 
 class FormatDescriptor
 {

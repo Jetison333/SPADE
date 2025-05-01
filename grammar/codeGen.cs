@@ -1,32 +1,40 @@
+using System.ComponentModel.Design;
 using System.Reflection;
 using System.Threading.Tasks.Dataflow;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
-using DiscreteParser.grammar.descriptor;
+using SPADE.Grammar.descriptor;
+using SPADE.Grammar.Enums;
 
-namespace DiscreteParser.grammar;
+namespace SPADE.Grammar;
 
 class codeGen : IcollListener {
-    public UtilCollection collection;
     public Dictionary<string, UtilCollection> map;
-    public bool constraintsMet = true;
 
     public Stack<FormatDescriptor> formatStack;
+    public SetDescriptor ?setDescriptor;
 
     public Stack<SetDescriptor> setDescriptorStack;
 
     public Stack<ConstraintDescriptor> constraintDescriptorStack;
+    public Stack<Stack<ConstraintDescriptor>> constraintDescriptorStackStack;
 
-    public codeGen(UtilCollection c) : base() 
+    public codeGen() : base() 
     {
-        collection = c;
         map = new();
         formatStack = new();
         setDescriptorStack = new();
         constraintDescriptorStack = new();
+        constraintDescriptorStackStack = new();
     }
+
+    public void Parse(UtilCollection utilCollection)
+    {
+        setDescriptor!.isMember(utilCollection);
+    }
+
     /// <summary>
     /// Enter a parse tree produced by <see cref="collParser.start"/>.
     /// </summary>
@@ -41,6 +49,10 @@ class codeGen : IcollListener {
     /// <param name="context">The parse tree.</param>
     public void ExitStart([NotNull] collParser.StartContext context)
     {
+        setDescriptor = setDescriptorStack.Pop();
+
+        if (setDescriptorStack.Count() != 0)
+            throw new Exception("set Descriptor stack not empty");
 
     }
     /// <summary>
@@ -86,6 +98,7 @@ class codeGen : IcollListener {
             formatStack.Push(new FormatDescriptor(context.TERM().ToString()!));
         }
 
+        /*
         if (context.Parent is not collParser.FormatContext)
         {
             map = new();
@@ -93,6 +106,7 @@ class codeGen : IcollListener {
             if (formatStack.Count() != 0) throw new Exception("formatStack not empty after eval");
             form.parseFunc(map, collection);
         }
+        */
     }
     /// <summary>
     /// Enter a parse tree produced by <see cref="collParser.constraint"/>.
@@ -107,55 +121,13 @@ class codeGen : IcollListener {
     /// <param name="context">The parse tree.</param>
     public void ExitConstraint([NotNull] collParser.ConstraintContext context)
     {
-        switch(context.DEFINITION().ToString())
+        if (context.@object().BUILT_IN() != null)
         {
-            case "is":
-                if (context.@object() != null && context.@object().BUILT_IN != null)
-                switch(context.@object().BUILT_IN().ToString())
-                {
-                    case "set":
-                        constraintsMet = constraintsMet && map[context.TERM().ToString()!].IsUnordered();                    
-                        if (map[context.TERM().ToString()!].IsOrdered())
-                        {
-                            throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().BUILT_IN()} failed because {context.TERM()} was not a set");
-                        }
-                        break;
-                    case "list":
-                        constraintsMet = constraintsMet && map[context.TERM().ToString()!].IsOrdered();                    
-                        if (map[context.TERM().ToString()!].IsUnordered())
-                        {
-                            throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().BUILT_IN()} failed because {context.TERM()} was not a list");
-                        }
-                        break;
-                    case "int":
-                        constraintsMet = constraintsMet && map[context.TERM().ToString()!].IsValue();                    
-                        if (!map[context.TERM().ToString()!].IsValue())
-                        {
-                            throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().BUILT_IN()} failed because {context.TERM()} was not a value");
-                        }
-                        break;
-                }
-                break;
-
-            case "subset":
-                if (context.@object() != null)
-                {
-                    if (context.@object().BIN_OP() != null || context.@object().set() != null)
-                    {
-                        SetDescriptor subsetSet = setDescriptorStack.Pop();
-                        bool constraintMet = true;
-                        foreach (UtilCollection item in map[context.TERM().ToString()!])
-                        {
-                            if (!subsetSet.isMember(item))
-                            {
-                                constraintMet = false;
-                                throw new Exception($"Constraint {context.TERM()} {context.DEFINITION()} {context.@object().GetText()} failed because {item} was not a subset of {context.@object().GetText()}");
-                            }
-                        }
-                        constraintsMet = constraintMet && constraintsMet;
-                    }
-                }
-                break;
+            constraintDescriptorStack.Push(new ConstraintDescriptor(context.TERM().ToString()!, context.DEFINITION().ToString()!, context.@object().BUILT_IN().ToString()!));
+        }
+        else
+        {
+            constraintDescriptorStack.Push(new ConstraintDescriptor(context.TERM().ToString()!, context.DEFINITION().ToString()!, setDescriptorStack.Pop()));
         }
     }
     /// <summary>
@@ -173,7 +145,12 @@ class codeGen : IcollListener {
     {
         if (context.BUILT_IN() != null)
         {
-            setDescriptorStack.Push(new SetDescriptor(map, context.BUILT_IN().ToString()!));
+            //setDescriptorStack.Push(new SetDescriptor(map, context.BUILT_IN().ToString()!));
+        }
+
+        if (context.BUILT_IN_SET() != null)
+        {
+            setDescriptorStack.Push(new SetDescriptor(map, BuiltInSet.integers));
         }
 
         if (context.TERM() != null)
@@ -209,6 +186,8 @@ class codeGen : IcollListener {
     /// <param name="context">The parse tree.</param>
     public void EnterSet([NotNull] collParser.SetContext context)
     {
+        constraintDescriptorStackStack.Push(constraintDescriptorStack);
+        constraintDescriptorStack = new();
     }
     /// <summary>
     /// Exit a parse tree produced by <see cref="collParser.set"/>.
@@ -216,6 +195,12 @@ class codeGen : IcollListener {
     /// <param name="context">The parse tree.</param>
     public void ExitSet([NotNull] collParser.SetContext context)
     {
+        setDescriptorStack.Push(
+            new SetDescriptor(map, formatStack.Pop(), new List<ConstraintDescriptor>(constraintDescriptorStack))
+        );
+
+        constraintDescriptorStack = constraintDescriptorStackStack.Pop();
+
     }
     /// <summary>
     /// Enter a parse tree produced by <see cref="collParser.list"/>.
