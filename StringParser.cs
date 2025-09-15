@@ -11,10 +11,13 @@ public class StringParser
 {
     readonly string format;
     public Dictionary<string, UtilCollection> map = new();
+    
+    private bool hasParsed;
 
-    public StringParser (string f)
+    public StringParser(string f)
     {
         format = f;
+        hasParsed = false;
     }
 
     public void parse(string instance)
@@ -37,6 +40,10 @@ public class StringParser
 
     public UtilCollection this[string key]
     {
-        get { return map[key]; }
+        get
+        {
+            if (!hasParsed) throw new InvalidOperationException("Must parse an instance string first");
+            return map[key];
+        }
     }
 }
