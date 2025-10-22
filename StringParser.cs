@@ -22,6 +22,7 @@ public class StringParser
 
     public void parse(string instance)
     {
+        hasParsed = true;
         AntlrInputStream stream = new AntlrInputStream(format);
         collLexer lex =  new collLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lex);
