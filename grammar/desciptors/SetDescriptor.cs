@@ -86,6 +86,7 @@ class SetDescriptor
         {
             foreach (UtilCollection item in a)
             {
+                if (!item.IsOrdered()) return false;
                 if (!isMember(item) && !other.isMember(item))
                 {
                     return false;
