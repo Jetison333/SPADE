@@ -9,7 +9,7 @@
       "upgradePackages": false
     },
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": { "moby": false },
-    "ghcr.io/reduxisu/features/rbs:1": {}
+    "ghcr.io/reduxisu/features/rbs:1": { "version": "feat/1-dotnet-mtp" }
   },
   "remoteUser": "vscode",
   "customizations": {
